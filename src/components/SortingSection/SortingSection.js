@@ -26,7 +26,7 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
             animations.forEach((ani, i) => {
                 setTimeout(() => {
                     setCols(ani.animation);
-                }, i*10);
+                }, i*15);
             });
         }
 
