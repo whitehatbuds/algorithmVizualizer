@@ -74,7 +74,7 @@ export const homeObjFive = {
     lightTopLine: false,
     lightTextDesc: false,
     buttonLabel: 'QuickSort',
-    description: 'Sorting Visualizer. Pick a Sort',
+    description: 'Pick a Sort',
     headline: 'Sorting Visualizer',
     lightText: false,
     topLine: 'Yours Truly',

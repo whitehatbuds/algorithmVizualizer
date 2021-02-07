@@ -45,7 +45,7 @@ export const SortingColumn = styled.div`
     }
 `;
 
-export const SortingColumn2 = styled.div`
+export const Sticks = styled.div`
     background-color: green;
     height: ${({lineHeight}) => `${lineHeight}px`};
     width: 2px;
