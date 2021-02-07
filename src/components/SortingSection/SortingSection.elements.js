@@ -19,8 +19,8 @@ export const SelectionColumn = styled.div`
     padding-right: 15px;
     padding-left: 15px;
     flex: 1;
-    max-width: 10%;
-    flex-basis: 10%;
+    max-width: 20%;
+    /* flex-basis: 10%; */
 
     @media screen and (max-width: 768px) {
         max-width: 100%;
@@ -37,7 +37,7 @@ export const SortingColumn = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    max-width: 90%;
+    max-width: 80%;
     flex: 1;
     color: black;
     @media screen and (max-width: 768px) {
@@ -100,4 +100,41 @@ export const Img = styled.img`
     vertical-align: middle;
     display: inline-block;
     max-height: 500px;
+`;
+
+export const SliderContainer = styled.div`
+    width: 100%;
+    margin: 10px;
+`;
+
+export const Slider = styled.input`
+    width: 100%;
+    background: linear-gradient(90deg, rgb(117, 252, 117) 60%, rgb(214, 214, 214) 60%);
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    border-radius: 12px;
+    color: black;
+    box-shadow: 0px 1px 10px 1px black;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+`;
+
+export const SliderValue = styled.p`
+    margin: 10px;
+    opacity: 0.7;
+    color: black;
+
 `;

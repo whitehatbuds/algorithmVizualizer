@@ -30,7 +30,7 @@ const Navbar = () => {
                 <NavbarContainer>
                     <NavLogo to="/" onClick={closeMobileMenu}>
                         <NavIcon />
-                        ULTRA
+                        Kah Hwa's Portfolio
                     </NavLogo>
                     <MobileIcon onClick={toggleClick}>
                         {click ? <FaTimes /> : <FaBars />}

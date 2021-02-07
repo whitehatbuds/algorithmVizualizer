@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InfoSec, InfoRow, SelectionColumn, SortingColumn, TextWrapper, Subtitle, TopLine, Heading, Sticks } from './SortingSection.elements';
+import { InfoSec, InfoRow, SelectionColumn, SortingColumn, TextWrapper, Subtitle, TopLine, Heading, Sticks, SliderContainer, Slider, SliderValue } from './SortingSection.elements';
 import { Container, Button } from '../../globalStyles';
 import { quickSort } from './SortingAlgorithms';
 
@@ -7,9 +7,11 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
                     description, topLine}) => {
 
     const [cols, setCols] = useState([]);
+    const [noOfSticks, setNoOfSticks] = useState(1);
+
     useEffect(() => {
-        randomize();
-    }, []);
+        randomize(noOfSticks);
+    }, [noOfSticks]);
 
     const sortWithAnimation = async (sortType) => {
         let animations;
@@ -30,9 +32,9 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
 
     };
 
-    const randomize = (n = 150) => {
+    const randomize = n => {
         const randomIntervals = (min, max) => ~~(Math.random() * (max - min+1) + min);
-        const arr = Array(n).fill();
+        const arr = Array(parseInt(n, 10)).fill();
         setCols(arr.map((_, i) => <Sticks key={i} lineHeight={randomIntervals(5,300)}/> ));
     };
 
@@ -41,6 +43,7 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
         setCols(arr);
     };
 
+    const updateValue = e => setNoOfSticks(e.target.value);
     return (
         <>
             <InfoSec lightBg={lightBg}>
@@ -51,13 +54,17 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
                                 <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
                                 <Heading lightText={lightText}>{headline}</Heading>
                                 <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
+                                <SliderContainer>
+                                    <Slider type="range" min="1" max="150" value={noOfSticks} onChange={updateValue}/>
+                                    <SliderValue>Value: {noOfSticks}</SliderValue>
+                                </SliderContainer>
                                 <Button fontBig primary={primary} onClick={() => sortWithAnimation('QuickSort')}>
                                 QuickSort
                                 </Button>
                                 <Button fontBig primary={primary} onClick={justSort}>
                                     Just Sort
                                 </Button>
-                                <Button fontBig primary={primary} onClick={() => randomize()}>
+                                <Button fontBig primary={primary} onClick={() => randomize(noOfSticks)}>
                                     Randomize
                                 </Button>
                             </TextWrapper>

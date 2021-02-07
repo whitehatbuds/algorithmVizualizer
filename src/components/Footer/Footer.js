@@ -39,9 +39,9 @@ const Footer = () => {
                 <SocialMediaWrap>
                     <SocialLogo to='/'>
                         <SocialIcon />
-                        ULTRA
+                        KAH HWA
                     </SocialLogo>
-                    <WebsiteRights>ULTRA 2020</WebsiteRights>
+                    <WebsiteRights>Made This In 2021</WebsiteRights>
                     <SocialIcons>
                         <SocialIconLink href='/' target="_blank" aria-label="Facebook">
                             <FaFacebook />
