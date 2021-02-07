@@ -73,7 +73,6 @@ export const homeObjFive = {
     imgStart: false,
     lightTopLine: false,
     lightTextDesc: false,
-    buttonLabel: 'QuickSort',
     description: 'Pick a Sort',
     headline: 'Sorting Visualizer',
     lightText: false,
