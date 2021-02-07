@@ -10,45 +10,72 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
         randomize();
     }, []);
 
-    const quickSort = array => {
-        // if (array.length <= 1) return array;
+    // const quickSort = async array => {
+    //     if (array.length <= 1) return array;
+    //     const pivot = array[0];
+    //     const leftArr = [];
+    //     const rightArr = [];
+    //     for (let el of array.slice(1, array.length)) {
+    //         el.props.lineHeight < pivot.props.lineHeight ? leftArr.push(el) : rightArr.push(el);
+    //     }
+    //     const sorted = [...quickSort(leftArr), pivot, ...quickSort(rightArr)];
+    //     await sleep(50);
+    //     setColumns(sorted);
+    //     return sorted;
+    // }
 
-        // const pivot = array[0];
-        // const leftArr = []
-        // const rightArr = []
-        // for (let el of array.slice(1, array.length)) {
-        //     el.props.lineHeight < pivot.props.lineHeight ? leftArr.push(el) : rightArr.push(el);
-        // }
-        // const sorted = [...quickSort(leftArr), pivot, ...quickSort(rightArr)];
-        // setColumns(sorted);
-        // return sorted;
-        const arr = columns.slice(0);
-        setColumns(arr.sort((a, b) => a.props.lineHeight - b.props.lineHeight));
+    const quickSortWithAnimations = async () => {
+        const animations = await quickSort(columns.slice(0), 0, columns.length-1);
+        animations.forEach((ani, idx) => {
+            setTimeout(() => {
+                setColumns(ani.animation);
+            }, (idx+1) * 15);
+        });
     }
-
-    const testSortingAlgorithm = () => {
-        const output1 = quickSort(columns.slice(0));
-        const output2 = columns.slice(0).sort((a,b) => a.props.lineHeight - b.props.lineHeight);
-        console.log(areArraysEqual(output1, output2));
-    }
-
-    const areArraysEqual = (a, b) => {
-        if (a === b) return true;
-        if (a == null || b == null) return false;
-        if (a.length !== b.length) return false;
-        console.log('check individual');
-        for (let i=0; i < a.length; i++) {
-            if (a[i] !== b[i]) return false;
+    const quickSort = async (arr, start, end, animation=[]) => {
+        if (start < end) {
+            let pi = partition(arr, start, end, animation);
+            await quickSort(arr, start, pi - 1, animation);
+            await quickSort(arr, pi + 1, end, animation);
         }
-        return true;
+        return animation;
     }
+
+    const partition = (arr, start, end, animation) => {
+        let pivotIdx   = start;
+        const pivotVal = arr[end].props.lineHeight;
+        for (let i=start; i < end; i++) {
+            if (arr[i].props.lineHeight < pivotVal) {
+                [arr[i], arr[pivotIdx]] = [arr[pivotIdx], arr[i]];
+                pivotIdx++;
+                const objToAnimate = {
+                    animation: arr.slice(0),
+                    swap: [i, pivotIdx-1]
+                };
+                animation.push(objToAnimate);
+            }
+        }
+        [arr[pivotIdx], arr[end]] = [arr[end], arr[pivotIdx]];
+        const objToAnimate = {
+            animation: arr.slice(0),
+            swap: [pivotIdx, end]
+        };
+        animation.push(objToAnimate);
+        return pivotIdx;
+    };
+
     const randomize = () => {
         let arr = [];
         const randomIntervals = (min, max) => ~~(Math.random() * (max - min+1)+min);
-        for (let i=0; i < 100; i++) {
+        for (let i=0; i < 150; i++) {
             arr.push(randomIntervals(5, 300));
         }
         setColumns(arr.map((i, idx) => <SortingColumn2 key={idx} lineHeight={i} /> ));
+    };
+
+    const justSort = () => {
+        const arr = columns.slice(0).sort((a,b) => a.props.lineHeight - b.props.lineHeight);
+        setColumns(arr);
     };
 
     return (
@@ -61,8 +88,11 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
                                 <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
                                 <Heading lightText={lightText}>{headline}</Heading>
                                 <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
-                                <Button fontBig primary={primary} onClick={() => quickSort(columns)}>
+                                <Button fontBig primary={primary} onClick={quickSortWithAnimations}>
                                     {buttonLabel}
+                                </Button>
+                                <Button fontBig primary={primary} onClick={justSort}>
+                                    Just Sort
                                 </Button>
                                 <Button fontBig primary={primary} onClick={randomize}>
                                     Randomize
