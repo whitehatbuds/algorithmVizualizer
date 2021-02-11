@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { InfoSec, InfoRow, SelectionColumn, SortingColumn, TextWrapper, Subtitle, TopLine, Heading, Sticks, SliderContainer, Slider, SliderValue } from './SortingSection.elements';
 import { Container, Button } from '../../globalStyles';
-import { quickSort } from './SortingAlgorithms';
+import { quickSort, bubbleSort, mergeSort } from './SortingAlgorithms';
 
 const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, lightTextDesc, headline,
                     description, topLine}) => {
@@ -19,6 +19,12 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
             case 'QuickSort':
                 animations = await quickSort([...cols], 0, cols.length-1);
                 break;
+            case 'BubbleSort':
+                animations = await bubbleSort([...cols]);
+                break;
+            case 'MergeSort':
+                animations = mergeSort([...cols]);
+                break;
             default:
                 animations = [];
         }
@@ -29,7 +35,6 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
                 }, i*15);
             });
         }
-
     };
 
     const randomize = n => {
@@ -60,6 +65,12 @@ const SortingSection = ({ primary, lightBg, imgStart, lightTopLine, lightText, l
                                 </SliderContainer>
                                 <Button fontBig primary={primary} onClick={() => sortWithAnimation('QuickSort')}>
                                 QuickSort
+                                </Button>
+                                <Button fontBig primary={primary} onClick={() => sortWithAnimation('BubbleSort')}>
+                                BubbleSort
+                                </Button>
+                                <Button fontBig primary={primary} onClick={() => sortWithAnimation('MergeSort')}>
+                                MergeSort
                                 </Button>
                                 <Button fontBig primary={primary} onClick={justSort}>
                                     Just Sort

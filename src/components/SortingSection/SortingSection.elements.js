@@ -45,11 +45,14 @@ export const SortingColumn = styled.div`
     }
 `;
 
-export const Sticks = styled.div`
+export const Sticks = styled.div.attrs(props => ({
+    style: {
+        height: `${props.lineHeight}px`,
+    },
+}))`
     background-color: green;
-    height: ${({lineHeight}) => `${lineHeight}px`};
     width: 2px;
-    margin: 0 1px;
+    margin: 0 2px;
     display: inline-block;
 `;
 
